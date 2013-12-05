@@ -22,8 +22,11 @@
         WebinosService.call(this, obj);
         this.rpcHandler = rpcHandler;
     };
-    Service.prototype = new WebinosService();
-
+	// Inherit all functions from WebinosService
+	Service.prototype = Object.create(WebinosService.prototype);	
+	// The following allows the 'instanceof' to work properly
+	Service.prototype.constructor = Service;
+	// Register to the service discovery
     _webinos.registerServiceConstructor("http://webinos.org/api/db", Service);
 
     Service.prototype.open = function (successCallback, errorCallback) {
